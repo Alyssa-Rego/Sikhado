@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sikhado - Learn, Teach, Earn</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+            background: #0a0a0a;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Glowing Background Animation */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+            animation: backgroundGlow 8s ease-in-out infinite alternate;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes backgroundGlow {
+            0% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0.6;
+                transform: scale(1.1);
+            }
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
+            backdrop-filter: blur(20px);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 
+                0 4px 20px rgba(0,0,0,0.3),
+                0 0 40px rgba(102, 126, 234, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .logo img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+        }
+
+        .logo-text {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #FFD700, #FFA500, #FFD700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+            animation: logoGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes logoGlow {
+            0% {
+                filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.7));
+            }
+            100% {
+                filter: drop-shadow(0 0 20px rgba(255, 215, 0, 1));
+            }
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+        }
+
+        .nav-links a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .nav-links a:hover::after {
+            width: 80%;
+            left: 10%;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: white;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #FFD700, #FFA500, #FFD700);
+            color: #333;
+            box-shadow: 
+                0 4px 15px rgba(255, 215, 0, 0.4),
+                0 0 30px rgba(255, 215, 0, 0.2);
+            animation: btnGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes btnGlow {
+            0% {
+                box-shadow: 
+                    0 4px 15px rgba(255, 215, 0, 0.4),
+                    0 0 30px rgba(255, 215, 0, 0.2);
+            }
+            100% {
+                box-shadow: 
+                    0 6px 25px rgba(255, 215, 0, 0.6),
+                    0 0 40px rgba(255, 215, 0, 0.4);
+            }
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 
+                0 8px 35px rgba(255, 215, 0, 0.6),
+                0 0 50px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(102, 126, 234, 0.5);
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 25px rgba(102, 126, 234, 0.5);
+        }
+
+        .logo-hero {
+            width: 150px;
+            height: auto;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 
+                0 10px 40px rgba(255, 215, 0, 0.3),
+                0 0 60px rgba(255, 215, 0, 0.2);
+            animation: logoFloat 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes logoFloat {
+            0% {
+                transform: translateY(0px) scale(1);
+                box-shadow: 
+                    0 10px 40px rgba(255, 215, 0, 0.3),
+                    0 0 60px rgba(255, 215, 0, 0.2);
+            }
+            100% {
+                transform: translateY(-10px) scale(1.02);
+                box-shadow: 
+                    0 15px 50px rgba(255, 215, 0, 0.4),
+                    0 0 80px rgba(255, 215, 0, 0.3);
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.8) 0%, rgba(26, 26, 46, 0.8) 100%);
+            padding: 150px 0 100px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(102, 126, 234, 0.1) 0%, transparent 50%);
+            animation: heroGlow 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroGlow {
+            0% {
+                opacity: 0.5;
+                transform: scale(1) rotate(0deg);
+            }
+            100% {
+                opacity: 0.8;
+                transform: scale(1.2) rotate(5deg);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: slideInUp 1s ease 0.2s both;
+            text-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeIn 1s ease 0.4s both;
+        }
+
+        /* Floating particles */
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, rgba(255, 215, 0, 0.3), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(102, 126, 234, 0.3), transparent),
+                radial-gradient(1px 1px at 90px 40px, rgba(255, 215, 0, 0.4), transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(102, 126, 234, 0.4), transparent);
+            background-repeat: repeat;
+            background-size: 200px 150px;
+            animation: particleFloat 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes particleFloat {
+            0% { transform: translateY(0px) translateX(0px); }
+            100% { transform: translateY(-1000px) translateX(100px); }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background: rgba(10, 10, 10, 0.9);
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, #FFD700, #667eea, #FFD700);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.3));
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: rgba(20, 20, 30, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 
+                0 10px 30px rgba(0,0,0,0.3),
+                0 0 40px rgba(102, 126, 234, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 
+                0 20px 40px rgba(0,0,0,0.4),
+                0 0 60px rgba(255, 215, 0, 0.3);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #FFD700, #667eea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
+            animation: iconPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #FFD700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        /* How it Works */
+        .how-it-works {
+            padding: 100px 0;
+            background: rgba(15, 15, 25, 0.9);
+            position: relative;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #FFD700, #667eea);
+            color: #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+            box-shadow: 
+                0 4px 15px rgba(255, 215, 0, 0.4),
+                0 0 40px rgba(255, 215, 0, 0.2);
+            animation: numberGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes numberGlow {
+            0% {
+                box-shadow: 
+                    0 4px 15px rgba(255, 215, 0, 0.4),
+                    0 0 40px rgba(255, 215, 0, 0.2);
+            }
+            100% {
+                box-shadow: 
+                    0 6px 25px rgba(255, 215, 0, 0.6),
+                    0 0 60px rgba(255, 215, 0, 0.4);
+            }
+        }
+
+        .step h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #FFD700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .step p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.9) 0%, rgba(26, 26, 46, 0.9) 100%);
+            padding: 100px 0;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 25% 25%, rgba(255, 215, 0, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(102, 126, 234, 0.2) 0%, transparent 50%);
+            animation: ctaGlow 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes ctaGlow {
+            0% {
+                opacity: 0.3;
+                transform: scale(1) rotate(0deg);
+            }
+            100% {
+                opacity: 0.7;
+                transform: scale(1.1) rotate(2deg);
+            }
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #FFD700, #667eea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.5));
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            text-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Dashboard Styles */
+        .dashboard {
+            display: none;
+            padding: 120px 0 50px;
+            background: rgba(10, 10, 10, 0.9);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .dashboard-header {
+            background: rgba(20, 20, 30, 0.8);
+            backdrop-filter: blur(15px);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 
+                0 4px 15px rgba(0,0,0,0.3),
+                0 0 40px rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .dashboard-header h1 {
+            color: #FFD700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .dashboard-header p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .dashboard-nav {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .dashboard-nav button {
+            padding: 0.75rem 1.5rem;
+            background: rgba(30, 30, 40, 0.8);
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .dashboard-nav button.active,
+        .dashboard-nav button:hover {
+            background: rgba(102, 126, 234, 0.2);
+            color: #FFD700;
+            border-color: #FFD700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .dashboard-content {
+            background: rgba(20, 20, 30, 0.8);
+            backdrop-filter: blur(15px);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 
+                0 4px 15px rgba(0,0,0,0.3),
+                0 0 40px rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .dashboard-content h2 {
+            color: #FFD700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            margin-bottom: 1.5rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .service-card {
+            background: rgba(30, 30, 40, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            border-color: #FFD700;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .service-card h3 {
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .service-card p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .service-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .service-price {
+            background: linear-gradient(45deg, #FFD700, #667eea);
+            color: #333;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .service-actions {
+            margin-top: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-danger {
+            background: rgba(220, 53, 69, 0.8);
+            color: white;
+            border: 2px solid rgba(220, 53, 69, 0.5);
+            box-shadow: 0 0 15px rgba(220, 53, 69, 0.3);
+        }
+
+        .btn-danger:hover {
+            background: rgba(200, 35, 51, 0.9);
+            transform: translateY(-1px);
+            box-shadow: 0 5px 20px rgba(220, 53, 69, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .cta h2 {
+                font-size: 2rem;
+            }
+
+            .logo {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+
+            .logo img {
+                height: 40px;
+            }
+
+            .logo-text {
+                font-size: 1.5rem;
+            }
+
+            .logo-hero {
+                width: 120px;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 215, 0, 0.3);
+            border-radius: 50%;
+            border-top-color: #FFD700;
+            animation: spin 1s ease-in-out infinite;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .notification {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            z-index: 3000;
+            animation: slideInRight 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .notification.success {
+            background: rgba(40, 167, 69, 0.9);
+            box-shadow: 0 0 30px rgba(40, 167, 69, 0.3);
+        }
+
+        .notification.error {
+            background: rgba(220, 53, 69, 0.9);
+            box-shadow: 0 0 30px rgba(220, 53, 69, 0.3);
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Additional glow effects for links and interactive elements */
+        a {
+            color: #FFD700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+        }
+
+        /* Scroll animations */
+        @keyframes slideInDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Pulsing glow effect for important elements */
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% {
+                box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            }
+            100% {
+                box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+            }
+        }
+
+        /* Glowing borders for cards and containers */
+        .glow-border {
+            position: relative;
+            border: 1px solid transparent;
+            background: linear-gradient(rgba(20, 20, 30, 0.8), rgba(30, 30, 40, 0.8)) padding-box,
+                        linear-gradient(45deg, #FFD700, #667eea, #FFD700) border-box;
+        }
+
+        /* Enhanced scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(10, 10, 10, 0.8);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #FFD700, #667eea);
+            border-radius: 6px;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <img src="SIKHADO logo.jpg" alt="Sikhado Logo" onerror="this.style.display='none'">
+                <div class="logo-text">Sikhado</div>
+            </div>
+            <ul class="nav-links">
+                <li><a onclick="scrollToSection('home')">Home</a></li>
+                <li><a onclick="scrollToSection('features')">Features</a></li>
+                <li><a onclick="scrollToSection('how-it-works')">How It Works</a></li>
+                <li><a onclick="showDashboard()">Services</a></li>
+            </ul>
+            <div class="auth-buttons" id="authButtons">
+                <a href="LoginSignup.html" class="btn btn-secondary">Login</a>
+                <a href="LoginSignup.html?form=signup" class="btn btn-primary">Sign Up</a>
+            </div>
+            <div class="user-info" id="userInfo" style="display: none;">
+                <span id="userName"></span>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="mainContent">
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <img src="SIKHADO logo.jpg" alt="Sikhado Logo" class="logo-hero" onerror="this.style.display='none'">
+                    <h1>Learn, Teach, Earn</h1>
+                    <p>Connect with skilled professionals and learners in a vibrant community where knowledge meets opportunity</p>
+                    <div class="hero-buttons">
+                        <a href="LoginSignup.html?form=signup" class="btn btn-primary pulse-glow">Get Started</a>
+                        <button class="btn btn-secondary" onclick="scrollToSection('features')">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features" id="features">
+            <div class="container">
+                <h2 class="section-title">Why Choose Sikhado?</h2>
+                <div class="features-grid">
+                    <div class="feature-card glow-border">
+                        <div class="feature-icon">🎓</div>
+                        <h3>Learn New Skills</h3>
+                        <p>Access a wide range of skills and expertise from verified professionals in various fields</p>
+                    </div>
+                    <div class="feature-card glow-border">
+                        <div class="feature-icon">💼</div>
+                        <h3>Offer Your Services</h3>
+                        <p>Monetize your skills by offering services to learners and clients who need your expertise</p>
+                    </div>
+                    <div class="feature-card glow-border">
+                        <div class="feature-icon">🤝</div>
+                        <h3>Build Connections</h3>
+                        <p>Connect with like-minded individuals and build professional relationships that last</p>
+                    </div>
+                    <div class="feature-card glow-border">
+                        <div class="feature-icon">⭐</div>
+                        <h3>Quality Assurance</h3>
+                        <p>Rate and review services to maintain high quality standards in our community</p>
+                    </div>
+                    <div class="feature-card glow-border">
+                        <div class="feature-icon">💰</div>
+                        <h3>Secure Payments</h3>
+                        <p>Safe and secure payment processing with multiple payment options available</p>
+                    </div>
+                    <div class="feature-card glow-border">
+                        <div class="feature-icon">📱</div>
+                        <h3>Easy to Use</h3>
+                        <p>Intuitive platform designed for seamless user experience across all devices</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="how-it-works" id="how-it-works">
+            <div class="container">
+                <h2 class="section-title">How It Works</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Create Your Profile</h3>
+                        <p>Sign up and create a detailed profile showcasing your skills or learning needs</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Browse & Connect</h3>
+                        <p>Search for services or clients, browse profiles, and connect with the right match</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Start Learning/Teaching</h3>
+                        <p>Begin your learning journey or start teaching others with our secure platform</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h3>Get Paid & Grow</h3>
+                        <p>Receive payments securely and build your reputation through reviews and ratings</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>Ready to Start Your Journey?</h2>
+                    <p>Join thousands of learners and professionals already part of the Sikhado community</p>
+                    <a href="LoginSignup.html?form=signup" class="btn btn-primary pulse-glow" style="font-size: 1.1rem; padding: 1rem 2rem;">Join Sikhado Today</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboard">
+        <div class="container">
+            <div class="dashboard-header glow-border">
+                <h1>Welcome to Your Dashboard</h1>
+                <p>Manage your profile, services, and connections</p>
+                <button class="btn btn-secondary" onclick="showMainContent()" style="margin-top: 1rem;">Back to Home</button>
+            </div>
+            
+            <div class="dashboard-nav">
+                <button class="active" onclick="showDashboardSection('overview')">Overview</button>
+                <button onclick="showDashboardSection('services')">My Services</button>
+                <button onclick="showDashboardSection('requests')">Service Requests</button>
+                <button onclick="showDashboardSection('portfolio')">Portfolio</button>
+                <button onclick="showDashboardSection('reviews')">Reviews</button>
+            </div>
+
+            <div class="dashboard-content glow-border">
+                <div id="overview-section">
+                    <h2>Dashboard Overview</h2>
+                    <div class="features-grid">
+                        <div class="feature-card glow-border">
+                            <h3>Active Services</h3>
+                            <p style="font-size: 2rem; color: #FFD700; text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);" id="activeServicesCount">0</p>
+                        </div>
+                        <div class="feature-card glow-border">
+                            <h3>Pending Requests</h3>
+                            <p style="font-size: 2rem; color: #667eea; text-shadow: 0 0 20px rgba(102, 126, 234, 0.5);">5</p>
+                        </div>
+                        <div class="feature-card glow-border">
+                            <h3>Total Earnings</h3>
+                            <p style="font-size: 2rem; color: #FFD700; text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);">₹12,500</p>
+                        </div>
+                        <div class="feature-card glow-border">
+                            <h3>Rating</h3>
+                            <p style="font-size: 2rem; color: #FFD700; text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);">4.8 ⭐</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="services-section" style="display: none;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h2>My Services</h2>
+                        <button class="btn btn-primary" onclick="addService()">Add New Service</button>
+                    </div>
+                    <div class="services-grid" id="servicesGrid">
+                        <!-- Services will be populated here -->
+                    </div>
+                </div>
+
+                <div id="requests-section" style="display: none;">
+                    <h2>Service Requests</h2>
+                    <div id="requestsList">
+                        <div class="service-card glow-border">
+                            <div class="service-header">
+                                <h3>Web Development Request</h3>
+                                <span class="service-price">₹5,000</span>
+                            </div>
+                            <p>Looking for a full-stack developer to build an e-commerce website</p>
+                            <div style="margin-top: 1rem;">
+                                <button class="btn btn-primary btn-small">Accept</button>
+                                <button class="btn btn-secondary btn-small">Decline</button>
+                            </div>
+                        </div>
+                        <div class="service-card glow-border">
+                            <div class="service-header">
+                                <h3>Logo Design Request</h3>
+                                <span class="service-price">₹3,000</span>
+                            </div>
+                            <p>Need a modern logo design for a tech startup</p>
+                            <div style="margin-top: 1rem;">
+                                <button class="btn btn-primary btn-small">Accept</button>
+                                <button class="btn btn-secondary btn-small">Decline</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="portfolio-section" style="display: none;">
+                    <h2>My Portfolio</h2>
+                    <div class="service-card glow-border">
+                        <h3>E-commerce Website</h3>
+                        <p>Built a complete e-commerce solution using React and Node.js with payment integration.</p>
+                        <div style="margin-top: 1rem;">
+                            <span class="service-price">Completed</span>
+                        </div>
+                    </div>
+                    <div class="service-card glow-border">
+                        <h3>Mobile App Design</h3>
+                        <p>Designed UI/UX for a food delivery mobile application with modern interface.</p>
+                        <div style="margin-top: 1rem;">
+                            <span class="service-price">Completed</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="reviews-section" style="display: none;">
+                    <h2>Reviews & Ratings</h2>
+                    <div class="service-card glow-border">
+                        <h3>⭐⭐⭐⭐⭐ Excellent Service!</h3>
+                        <p>"Great communication and delivered exactly what was promised. Highly recommended!"</p>
+                        <small style="color: rgba(255, 255, 255, 0.6);">- John Doe, 2 days ago</small>
+                    </div>
+                    <div class="service-card glow-border">
+                        <h3>⭐⭐⭐⭐⭐ Outstanding Work!</h3>
+                        <p>"Professional approach and attention to detail. Will definitely work again!"</p>
+                        <small style="color: rgba(255, 255, 255, 0.6);">- Jane Smith, 1 week ago</small>
+                    </div>
+                    <div class="service-card glow-border">
+                        <h3>⭐⭐⭐⭐ Very Good!</h3>
+                        <p>"Delivered on time with good quality. Minor revisions needed but overall satisfied."</p>
+                        <small style="color: rgba(255, 255, 255, 0.6);">- Mike Johnson, 2 weeks ago</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentUser = null;
+        let services = [
+            {
+                id: 1,
+                title: "Web Development",
+                description: "Full-stack web development using React and Node.js",
+                category: "programming",
+                price: 2000,
+                duration: "2 weeks",
+                providerId: 1,
+                providerName: "John Doe"
+            },
+            {
+                id: 2,
+                title: "Logo Design",
+                description: "Professional logo design for businesses",
+                category: "design",
+                price: 1500,
+                duration: "3 days",
+                providerId: 2,
+                providerName: "Jane Smith"
+            },
+            {
+                id: 3,
+                title: "Digital Marketing Strategy",
+                description: "Complete digital marketing strategy and implementation",
+                category: "marketing",
+                price: 3000,
+                duration: "1 week",
+                providerId: 1,
+                providerName: "John Doe"
+            }
+        ];
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            checkUserSession();
+            addScrollEffects();
+            checkForLoginRedirect();
+        });
+
+        // Check for login redirect from authentication page
+        function checkForLoginRedirect() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const loginSuccess = urlParams.get('login');
+            const userName = urlParams.get('user');
+            
+            if (loginSuccess === 'success' && userName) {
+                // Simulate successful login
+                currentUser = {
+                    name: decodeURIComponent(userName),
+                    email: 'user@example.com'
+                };
+                updateUIForLoggedInUser();
+                showNotification('Welcome back! Login successful.', 'success');
+                
+                // Clean up URL
+                const url = new URL(window.location);
+                url.searchParams.delete('login');
+                url.searchParams.delete('user');
+                history.replaceState(null, '', url);
+            }
+        }
+
+        // Add scroll effects
+        function addScrollEffects() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeIn 0.6s ease forwards';
+                    }
+                });
+            });
+
+            document.querySelectorAll('.feature-card, .step').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Check if user is logged in
+        function checkUserSession() {
+            // Check for session storage or other persistent login state
+            // This would be implemented with your backend authentication
+        }
+
+        // Update UI for logged in user
+        function updateUIForLoggedInUser() {
+            document.getElementById('authButtons').style.display = 'none';
+            document.getElementById('userInfo').style.display = 'flex';
+            document.getElementById('userName').textContent = `Hello, ${currentUser.name}`;
+            document.getElementById('userName').style.color = '#FFD700';
+            document.getElementById('userName').style.textShadow = '0 0 15px rgba(255, 215, 0, 0.5)';
+        }
+
+        // Logout function
+        function logout() {
+            currentUser = null;
+            
+            document.getElementById('authButtons').style.display = 'flex';
+            document.getElementById('userInfo').style.display = 'none';
+            
+            showMainContent();
+            showNotification('Logged out successfully!', 'success');
+        }
+
+        // Navigation functions
+        function scrollToSection(sectionId) {
+            if (sectionId === 'home') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    section.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        }
+
+        function showDashboard() {
+            if (!currentUser) {
+                // Redirect to login page instead of showing modal
+                window.location.href = 'LoginSignup.html?redirect=dashboard';
+                return;
+            }
+            
+            document.getElementById('mainContent').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            renderServices();
+            updateActiveServicesCount();
+        }
+
+        function showMainContent() {
+            document.getElementById('mainContent').style.display = 'block';
+            document.getElementById('dashboard').style.display = 'none';
+        }
+
+        // Dashboard functions
+        function showDashboardSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('[id$="-section"]').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName + '-section').style.display = 'block';
+            
+            // Update navigation
+            document.querySelectorAll('.dashboard-nav button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        function renderServices() {
+            const servicesGrid = document.getElementById('servicesGrid');
+            servicesGrid.innerHTML = '';
+            
+            services.forEach(service => {
+                const serviceElement = document.createElement('div');
+                serviceElement.className = 'service-card glow-border';
+                serviceElement.innerHTML = `
+                    <div class="service-header">
+                        <h3>${service.title}</h3>
+                        <span class="service-price">₹${service.price}</span>
+                    </div>
+                    <p>${service.description}</p>
+                    <p><strong>Duration:</strong> ${service.duration}</p>
+                    <p><strong>Category:</strong> ${service.category}</p>
+                    <div class="service-actions">
+                        <button class="btn btn-secondary btn-small" onclick="editService(${service.id})">Edit</button>
+                        <button class="btn btn-danger btn-small" onclick="deleteService(${service.id})">Delete</button>
+                    </div>
+                `;
+                servicesGrid.appendChild(serviceElement);
+            });
+        }
+
+        function updateActiveServicesCount() {
+            document.getElementById('activeServicesCount').textContent = services.length;
+        }
+
+        function addService() {
+            // Redirect to a service creation page or show a form
+            showNotification('Service creation form would open here', 'success');
+        }
+
+        function editService(serviceId) {
+            showNotification(`Edit service ${serviceId}`, 'success');
+        }
+
+        function deleteService(serviceId) {
+            if (confirm('Are you sure you want to delete this service?')) {
+                services = services.filter(s => s.id !== serviceId);
+                renderServices();
+                updateActiveServicesCount();
+                showNotification('Service deleted successfully', 'success');
+            }
+        }
+
+        // Notification function
+        function showNotification(message, type) {
+            // Remove existing notifications
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(notification => notification.remove());
+
+            // Create new notification
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
